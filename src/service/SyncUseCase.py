@@ -19,5 +19,3 @@ class SyncUseCase:
         )
         config = repository.process(model)
         print(f'End...')
-
-

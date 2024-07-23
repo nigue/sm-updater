@@ -1,5 +1,5 @@
 {
-    "id": "itg_san_diego",
+    "id": "arcade_center",
     "realize": 1,
     "so": "linux",
     "sm": "ITGmania",
@@ -15,12 +15,12 @@
     },
     "packs": [
         {
-            "link": "https://pixeldrain.com/u/8cQC3c9C",
-            "date": 1720116786,
-            "file": "b854a39959b7736db2e1c2bb68cbc10df6a00bca9d0b6a2312f01ab5.7z",
-            "password": "imperiaL3902",
+            "link": "https://pixeldrain.com/u/8cQC4haC",
+            "date": 1720116711,
+            "file": "asdf.7z",
+            "password": "asdf",
             "folder": "/Packages",
-            "name": "peters_ddr_and_scalable_noteskins.zip",
+            "name": "asdf.zip",
             "md5": "8a6fa1f79c87c32e2a541393719d6f1f",
             "compress": true
         }
