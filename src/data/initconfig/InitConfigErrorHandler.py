@@ -37,8 +37,31 @@ class InitConfigErrorHandler(ErrorHandler[InitConfigResponseDTO], ABC):
             e = "El valor realize no puede estar vacío"
             print(f"Error: {e}")
             raise HandlerException(e)
+        if not dto.so:
+            e = "El valor so no puede estar vacío"
+            print(f"Error: {e}")
+            raise HandlerException(e)
         if not os.path.isdir(dto.sm_arcade_paths["sm"]):
             e = "Debe exsistir un directorio sm"
+            print(f"Error: {e}")
+            raise HandlerException(e)
+        div = "/"
+        if dto.so.find("win") == 1:
+            div = "\\"
+        if not os.path.isdir(f'{dto.sm_arcade_paths["sm"]}{div}Characters'):
+            e = "Debe exsistir un directorio sm Characters"
+            print(f"Error: {e}")
+            raise HandlerException(e)
+        if not os.path.isdir(f'{dto.sm_arcade_paths["sm"]}{div}NoteSkins'):
+            e = "Debe exsistir un directorio sm NoteSkins"
+            print(f"Error: {e}")
+            raise HandlerException(e)
+        if not os.path.isdir(f'{dto.sm_arcade_paths["sm"]}{div}Packages'):
+            e = "Debe exsistir un directorio sm Packages"
+            print(f"Error: {e}")
+            raise HandlerException(e)
+        if not os.path.isdir(f'{dto.sm_arcade_paths["sm"]}{div}Themes'):
+            e = "Debe exsistir un directorio sm Themes"
             print(f"Error: {e}")
             raise HandlerException(e)
         if not os.path.isfile(dto.sm_arcade_paths["config"]):
