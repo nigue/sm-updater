@@ -1,8 +1,8 @@
 # Stepmania Updater
 
-## Explicaciones
+## Configuration
 
-    - Debe existir un archivo .env con 3 variables
+    - Create a file .env with 3 fields
         - ARCADE_ID_NAME
         - SUPABASE_USER_HASH
         - SUPABASE_API_KEY

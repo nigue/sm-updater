@@ -26,4 +26,3 @@ class SyncUseCase:
         persona = Persona(nombre="Juan", edad=30, direccion="Calle Falsa 123")
 
 
-        pass
