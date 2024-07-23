@@ -1,0 +1,28 @@
+{
+    "id": "itg_san_diego",
+    "realize": 1,
+    "so": "linux",
+    "sm": "ITGmania",
+    "credentials": {
+        "key": "1234",
+        "secret": "asdf"
+    },
+    "paths": {
+        "sm": "/opt/NotITG-v4.2.0",
+        "downloads": "/opt/Downloads",
+        "config": "/opt/Downloads/sm_sync_config.json",
+        "program": "/opt/SmScript"
+    },
+    "packs": [
+        {
+            "link": "https://pixeldrain.com/u/8cQC3c9C",
+            "date": 1720116786,
+            "file": "b854a39959b7736db2e1c2bb68cbc10df6a00bca9d0b6a2312f01ab5.7z",
+            "password": "imperiaL3902",
+            "folder": "/Packages",
+            "name": "peters_ddr_and_scalable_noteskins.zip",
+            "md5": "8a6fa1f79c87c32e2a541393719d6f1f",
+            "compress": true
+        }
+    ]
+}
