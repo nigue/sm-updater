@@ -1,4 +1,6 @@
 import os
+import pixeldrain
+import json
 from typing import List
 
 from dotenv import load_dotenv
@@ -23,14 +25,22 @@ class SyncUseCase:
         #TODO try catch finnaly
         remote_conf = repository.process(model)
         local_res = LocalResourcesResource().process(remote_conf.paths.config)
-        process_packs_list(remote_conf.packs, local_res, remote_conf.paths)
+        div = "/"
+        if remote_conf.so.lower().find("win") == 1:
+            div = "\\"
+        process_packs_list(remote_conf.packs, local_res, remote_conf.paths, div)
+        print(f'Actualizando configuracion local')
+        os.remove(remote_conf.paths.config)
+        with open(remote_conf.paths.config, 'w', encoding='utf-8') as f:
+            json.dump(remote_conf.packs, f, ensure_ascii=False, indent=4)
         print(f'End...')
 
 
 def process_packs_list(
         remote: List[InitConfigPackModel],
         local: List[InitConfigPackModel],
-        paths: InitConfigPathsModel
+        paths: InitConfigPathsModel,
+        div: str
 ):
     if len(local) == 0:
         for remote_pack in remote:
@@ -42,14 +52,17 @@ def process_packs_list(
             else:
                 print(f'Los archivos no son iguales')
                 if remote_pack.final_name == local_pack.final_name:
-                    print(f'Elimina pack local')
+                    file = f"{paths.sm}{div}{local_pack.folder}{div}{local_pack.final_name}"
+                    os.remove(file)
+                    print(f'Elimina pack local {file}')
                     process_pack(remote_pack, paths)
 
 
 def process_pack(
-        remote: InitConfigPackModel,
+        pack: InitConfigPackModel,
         paths: InitConfigPathsModel
 ):
+    #pixeldrain.download_file(file_id, file_name, file_path)
     print(f'Descarga pack')
     print(f'Prepara pack')
     pass
