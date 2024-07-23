@@ -41,8 +41,8 @@ class InitConfigErrorHandler(ErrorHandler[InitConfigResponseDTO], ABC):
             e = "Debe exsistir un directorio sm"
             print(f"Error: {e}")
             raise HandlerException(e)
-        if not os.path.isdir(dto.sm_arcade_paths["config"]):
-            e = "Debe exsistir un directorio config"
+        if not os.path.isfile(dto.sm_arcade_paths["config"]):
+            e = "Debe exsistir un archivo config"
             print(f"Error: {e}")
             raise HandlerException(e)
         if not os.path.isdir(dto.sm_arcade_paths["program"]):
