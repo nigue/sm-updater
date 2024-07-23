@@ -4,32 +4,26 @@ from typing import List
 
 @dataclass(frozen=True)
 class InitConfigPackModel:
-    md5: str
-    file: str
-    link: str
-    folder: str
-    compress: bool
+    identifier: str
     password: str
-    final_name: str
-    upload_date: str
+    destination: str
+    internal: str
+    file: str
+    compress: bool
 
     def equals(self, it) -> bool:
         result = True
-        if not self.md5 == it.md5:
-            result = False
-        if not self.file == it.file:
-            result = False
-        if not self.link == it.link:
-            result = False
-        if not self.folder == it.folder:
-            result = False
-        if not self.compress == it.compress:
+        if not self.identifier == it.identifier:
             result = False
         if not self.password == it.password:
             result = False
-        if not self.final_name == it.final_name:
+        if not self.destination == it.destination:
             result = False
-        if not self.upload_date == it.upload_date:
+        if not self.internal == it.internal:
+            result = False
+        if not self.file == it.file:
+            result = False
+        if not self.compress == it.compress:
             result = False
         return result
 

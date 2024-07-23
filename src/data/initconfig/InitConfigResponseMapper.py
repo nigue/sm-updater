@@ -12,14 +12,12 @@ class InitConfigResponseMapper(Mapper[InitConfigResponseDTO, InitConfigResponseM
         packs = []
         for pack in dto.sm_pack:
             packs.append(InitConfigPackModel(
-                md5=pack["md5"],
-                file=pack["file"],
-                link=pack["link"],
-                folder=pack["folder"],
-                compress=pack["compress"],
+                identifier=pack["identifier"],
                 password=pack["password"],
-                final_name=pack["final_name"],
-                upload_date=pack["upload_date"]
+                destination=pack["destination"],
+                internal=pack["internal"],
+                file=pack["file"],
+                compress=pack["compress"]
             ))
         return InitConfigResponseModel(
             name=dto.name,

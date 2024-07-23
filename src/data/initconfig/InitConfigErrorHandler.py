@@ -9,29 +9,23 @@ from src.excepcion.HandlerException import HandlerException
 class InitConfigErrorHandler(ErrorHandler[InitConfigResponseDTO], ABC):
     def handle(self, dto: InitConfigResponseDTO) -> None:
         for pack in dto.sm_pack:
-            if not pack["md5"]:
-                e = "El valor md5 no puede estar vacío"
-                print(f"Error: {e}")
-            if not pack["file"]:
-                e = "El valor file no puede estar vacío"
-                print(f"Error: {e}")
-            if not pack["link"]:
-                e = "El valor link no puede estar vacío"
-                print(f"Error: {e}")
-            if not pack["folder"]:
-                e = "El valor folder no puede estar vacío"
-                print(f"Error: {e}")
-            if not pack["compress"]:
-                e = "El valor compress no puede estar vacío"
+            if not pack["identifier"]:
+                e = "El valor identifier no puede estar vacío"
                 print(f"Error: {e}")
             if not pack["password"]:
                 e = "El valor password no puede estar vacío"
                 print(f"Error: {e}")
-            if not pack["final_name"]:
-                e = "El valor final_name no puede estar vacío"
+            if not pack["destination"]:
+                e = "El valor destination no puede estar vacío"
                 print(f"Error: {e}")
-            if not pack["upload_date"]:
-                e = "El valor upload_date no puede estar vacío"
+            if not pack["internal"]:
+                e = "El valor internal no puede estar vacío"
+                print(f"Error: {e}")
+            if not pack["file"]:
+                e = "El valor file no puede estar vacío"
+                print(f"Error: {e}")
+            if not pack["compress"]:
+                e = "El valor compress no puede estar vacío"
                 print(f"Error: {e}")
         if not dto.realize:
             e = "El valor realize no puede estar vacío"

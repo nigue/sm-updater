@@ -76,9 +76,9 @@ def process_pack(
         paths: InitConfigPathsModel,
         div: str
 ):
-    info = pixeldrain.info(pack.link)
+    info = pixeldrain.info(pack.identifier)
     pixeldrain.download_file(
-        pack.link,
+        pack.identifier,
         info['name'],
         f'{paths.downloads}{div}'
     )

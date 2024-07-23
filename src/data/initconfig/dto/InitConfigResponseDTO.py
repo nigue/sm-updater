@@ -5,14 +5,12 @@ from typing import List
 @dataclass(frozen=True)
 class InitConfigResponseSmPackDTO:
     id: int
-    md5: str
-    file: str
-    link: str
-    folder: str
-    compress: bool
+    identifier: str
     password: str
-    final_name: str
-    upload_date: str
+    destination: str
+    internal: str
+    file: str
+    compress: bool
     sm_configuration_id: int
 
 
