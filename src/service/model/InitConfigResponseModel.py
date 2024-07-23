@@ -36,4 +36,4 @@ class InitConfigResponseModel:
     sm: str
     credentials: InitConfigCredentialsModel
     paths: InitConfigPathsModel
-    sm_pack: List[InitConfigPackModel]
+    packs: List[InitConfigPackModel]

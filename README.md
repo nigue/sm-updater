@@ -1,4 +1,4 @@
-# Stepmania Updater
+# Stepmania linux Updater
 
 ## Configuration
 
