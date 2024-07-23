@@ -15,13 +15,11 @@
     },
     "packs": [
         {
-            "link": "https://pixeldrain.com/u/8cQC4haC",
-            "date": 1720116711,
-            "file": "asdf.7z",
+            "identifier": "8cQC4haC",
             "password": "asdf",
-            "folder": "/Packages",
-            "name": "asdf.zip",
-            "md5": "8a6fa1f79c87c32e2a541393719d6f1f",
+            "destination": "Packages",
+            "internal": "Songs",
+            "file": "asdf.zip",
             "compress": true
         }
     ]
