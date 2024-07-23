@@ -1,5 +1,6 @@
 import json
 import os
+from dataclasses import asdict
 from typing import List
 
 import pixeldrain
@@ -31,7 +32,8 @@ class SyncUseCase:
         print(f'Actualizando configuracion local')
         os.remove(remote_conf.paths.config)
         with open(remote_conf.paths.config, 'w', encoding='utf-8') as f:
-            json.dump(remote_conf.packs, f, ensure_ascii=False, indent=4)
+            packs_dict = [asdict(pack) for pack in remote_conf.packs]
+            json.dump(packs_dict, f, ensure_ascii=False, indent=4)
         print(f'End...')
 
 
