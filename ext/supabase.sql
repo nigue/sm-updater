@@ -1,10 +1,10 @@
 -- Archivo para importar la extructura database de supabase
 
 -- Clean
+DROP TABLE IF EXISTS public.sm_pack;
 DROP TABLE IF EXISTS public.sm_configuration;
 DROP TABLE IF EXISTS public.sm_arcade_paths;
 DROP TABLE IF EXISTS public.sm_arcade_credentials;
-DROP TABLE IF EXISTS public.sm_pack;
 
 -- Structure, policy and contraints
 create table
@@ -116,9 +116,10 @@ INSERT INTO public.sm_pack(
     compress,
     sm_configuration_id)
 VALUES(
-    '235hg5r6zsr',
-    'xgfrae1234',
+    'iden',
+    'pass',
     'Packages',
+    'Songs',
     'srgsgdftz.zip',
     true,
     1);
