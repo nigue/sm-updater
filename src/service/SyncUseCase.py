@@ -17,5 +17,5 @@ class SyncUseCase:
             os.getenv("SUPABASE_USER_HASH"),
             os.getenv("SUPABASE_API_KEY")
         )
-        config = repository.process(model)
+        remote = repository.process(model)
         print(f'End...')
