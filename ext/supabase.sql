@@ -122,7 +122,7 @@ INSERT INTO public.sm_pack(
 VALUES(
     'https://pixeldrain.com/u/235hg5r6zsr',
     1720112476,
-    'adfgadfv df.7z',
+    'adfgadfvdf.7z',
     'xgfrae1234',
     '/Packages',
     'srgsgdftz.zip',

@@ -7,6 +7,8 @@
 certutil -hashfile file.zip md5
 ```
 
+https://pypi.org/project/Pixeldrain/1.0.1/
+
 ## Configuration
 
     - Create a file .env with 3 fields
