@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from src.data.initconfig.InitConfigResource import InitConfigResource
 from src.data.initconfig.dto.InitConfigRequestModel import InitConfigRequestModel
+from src.data.localresources.LocalResourcesResource import LocalResourcesResource
 
 
 class SyncUseCase:
@@ -17,5 +18,6 @@ class SyncUseCase:
             os.getenv("SUPABASE_USER_HASH"),
             os.getenv("SUPABASE_API_KEY")
         )
-        remote = repository.process(model)
+        remote_conf = repository.process(model)
+        local_res = LocalResourcesResource().process(remote_conf.paths.config)
         print(f'End...')

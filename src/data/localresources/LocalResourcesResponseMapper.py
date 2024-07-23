@@ -6,7 +6,7 @@ from src.data.initconfig.dto.InitConfigResponseDTO import InitConfigResponseSmPa
 from src.service.model.InitConfigResponseModel import InitConfigPackModel
 
 
-class InitConfigResponseMapper(Mapper[List[InitConfigResponseSmPackDTO], List[InitConfigPackModel]], ABC):
+class LocalResourcesResponseMapper(Mapper[List[InitConfigResponseSmPackDTO], List[InitConfigPackModel]], ABC):
 
     def map(self, dtos: List[InitConfigResponseSmPackDTO]) -> List[InitConfigPackModel]:
         packs = []

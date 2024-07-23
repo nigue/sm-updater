@@ -46,7 +46,7 @@ class InitConfigErrorHandler(ErrorHandler[InitConfigResponseDTO], ABC):
             print(f"Error: {e}")
             raise HandlerException(e)
         div = "/"
-        if dto.so.find("win") == 1:
+        if dto.so.lower().find("win") == 1:
             div = "\\"
         if not os.path.isdir(f'{dto.sm_arcade_paths["sm"]}{div}Characters'):
             e = "Debe exsistir un directorio sm Characters"

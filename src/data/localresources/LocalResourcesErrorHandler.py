@@ -5,6 +5,6 @@ from src.data.ErrorHandler import ErrorHandler
 from src.data.initconfig.dto.InitConfigResponseDTO import InitConfigResponseSmPackDTO
 
 
-class InitConfigErrorHandler(ErrorHandler[List[InitConfigResponseSmPackDTO]], ABC):
+class LocalResourcesErrorHandler(ErrorHandler[List[InitConfigResponseSmPackDTO]], ABC):
     def handle(self, dtos: List[InitConfigResponseSmPackDTO]) -> None:
         pass
