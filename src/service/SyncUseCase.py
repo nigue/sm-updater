@@ -76,12 +76,12 @@ def process_pack(
         paths: InitConfigPathsModel,
         div: str
 ):
-    # info = pixeldrain.info(file_id)
+    info = pixeldrain.info(pack.link)
     pixeldrain.download_file(
         pack.link,
-        pack.file,
+        info['name'],
         f'{paths.downloads}{div}'
     )
-    print(f'Descarga pack {paths.downloads}{div}{pack.file}')
+    print(f'Descarga pack {paths.downloads}{div}{info['name']}')
     print(f'Prepara pack')
     pass
