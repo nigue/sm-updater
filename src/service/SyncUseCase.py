@@ -64,16 +64,21 @@ def process_packs_list(
         for remote_pack in remote:
             process_pack(remote_pack, paths, div)
     for remote_pack in remote:
+        procesable = True
         for local_pack in local:
-            if remote_pack.equals(local_pack):
-                print(f'Los archivos son iguales')
-            else:
-                print(f'Los archivos no son iguales')
-                if remote_pack.final_name == local_pack.final_name:
-                    file = f"{paths.sm}{div}{local_pack.folder}{div}{local_pack.final_name}"
+            if remote_pack.file == local_pack.file:
+                print(f'Mismo pack {remote_pack.file}')
+                if not remote_pack.identifier == local_pack.identifier:
+                    print(f'Update pack {remote_pack.file}')
+                    file = f"{paths.sm}{div}{local_pack.destination}{div}{local_pack.file}"
                     os.remove(file)
                     print(f'Elimina pack local {file}')
-                    process_pack(remote_pack, paths, div)
+                else:
+                    procesable = False
+            else:
+                print(f'Nuevo pack {remote_pack.file}')
+        if procesable:
+            process_pack(remote_pack, paths, div)
 
 
 def process_pack(
