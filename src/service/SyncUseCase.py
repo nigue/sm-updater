@@ -91,16 +91,17 @@ def process_pack(
     print(f'Descarga pack {downloaded_file}')
     print(f'Prepara pack')
     print(f'Descomprime pack')
+    temporal_dir = f'{paths.downloads}{div}temporal'
+    os.mkdir(temporal_dir)
     with py7zr.SevenZipFile(
-        f'{downloaded_file}',
+            downloaded_file,
             mode='r',
             password=pack.password) as initial_file:
-        initial_file.extractall(path=f'{paths.downloads}{div}')
+        initial_file.extractall(path=temporal_dir)
     print(f'Comprime pack')
-    dir_compress = f'{paths.downloads}{div}{pack.internal}'
     file_to_compress = f'{paths.sm}{div}{pack.destination}{div}{pack.file}'
-    store_zip_compression(dir_compress, file_to_compress)
-    shutil.rmtree(dir_compress)
+    store_zip_compression(temporal_dir, file_to_compress)
+    shutil.rmtree(temporal_dir)
     os.remove(downloaded_file)
 
 

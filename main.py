@@ -9,4 +9,4 @@ def print_hi(name):
 
 
 if __name__ == '__main__':
-    print_hi('SM-UPDATER')
+    print_hi('SM-UPDATER 1.0.0')
