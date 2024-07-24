@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS public.sm_report;
 DROP TABLE IF EXISTS public.sm_configuration;
 DROP TABLE IF EXISTS public.sm_arcade_paths;
 DROP TABLE IF EXISTS public.sm_arcade_credentials;
+drop function if exists publish_report(configuration_name, message)
 
 -- Structure and contraints
 create table
@@ -151,15 +152,20 @@ VALUES(
     1);
 
 -- Store procedures
-create or replace function publish_report(message text)
+create or replace function publish_report(configuration_name text, message text)
 returns bigint
 language plpgsql
 as $$
 declare
+  configuration_id bigint;
   new_row bigint;
 begin
+  select
+    id into configuration_id
+  from sm_configuration
+  where name = configuration_name;
   insert into sm_report(instant, message, sm_configuration_id)
-  values (NOW(), message, 1)
+  values (NOW(), message, configuration_id)
   returning id into new_row;
   return new_row;
 end;
