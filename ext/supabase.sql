@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS public.sm_configuration;
 DROP TABLE IF EXISTS public.sm_arcade_paths;
 DROP TABLE IF EXISTS public.sm_arcade_credentials;
 drop function if exists publish_report(configuration_name, message)
+drop function if exists update_pack(configuration_name, pack_name, pack_identifier)
 
 -- Structure and contraints
 create table
@@ -170,3 +171,5 @@ begin
   return new_row;
 end;
 $$;
+
+--drop function if exists update_pack(configuration_name, pack_name, pack_identifier)

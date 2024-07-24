@@ -60,9 +60,6 @@ def process_packs_list(
         paths: InitConfigPathsModel,
         div: str
 ):
-    if len(local) == 0:
-        for remote_pack in remote:
-            process_pack(remote_pack, paths, div)
     for remote_pack in remote:
         procesable = True
         for local_pack in local:
