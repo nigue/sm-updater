@@ -1,9 +1,12 @@
 import json
 import os
+import shutil
+import zipfile
 from dataclasses import asdict
 from typing import List
 
 import pixeldrain
+import py7zr
 from dotenv import load_dotenv
 
 from src.data.initconfig.InitConfigResource import InitConfigResource
@@ -84,6 +87,26 @@ def process_pack(
         info['name'],
         f'{paths.downloads}{div}'
     )
-    print(f'Descarga pack {paths.downloads}{div}{info['name']}')
+    downloaded_file = f'{paths.downloads}{div}{info['name']}'
+    print(f'Descarga pack {downloaded_file}')
     print(f'Prepara pack')
-    pass
+    print(f'Descomprime pack')
+    with py7zr.SevenZipFile(
+        f'{downloaded_file}',
+            mode='r',
+            password=pack.password) as initial_file:
+        initial_file.extractall(path=f'{paths.downloads}{div}')
+    print(f'Comprime pack')
+    dir_compress = f'{paths.downloads}{div}{pack.internal}'
+    file_to_compress = f'{paths.sm}{div}{pack.destination}{div}{pack.file}'
+    store_zip_compression(dir_compress, file_to_compress)
+    shutil.rmtree(dir_compress)
+    os.remove(downloaded_file)
+
+
+def store_zip_compression(dir_compress, file_to_compress):
+    with zipfile.ZipFile(file_to_compress, 'w', zipfile.ZIP_STORED) as zipf:
+        for root, dirs, files in os.walk(dir_compress):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zipf.write(file_path, os.path.relpath(file_path, dir_compress))
