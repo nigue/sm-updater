@@ -1,6 +1,6 @@
 # Stepmania linux Updater
 
-### Exaples
+### Examples
 
 1. Get md5 from file
 ```bat

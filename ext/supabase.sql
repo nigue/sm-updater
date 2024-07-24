@@ -149,3 +149,18 @@ VALUES(
     '2024-07-28 16:12:12+00',
     'text',
     1);
+
+-- Store procedures
+create or replace function publish_report(message text)
+returns bigint
+language plpgsql
+as $$
+declare
+  new_row bigint;
+begin
+  insert into sm_report(instant, message, sm_configuration_id)
+  values (NOW(), message, 1)
+  returning id into new_row;
+  return new_row;
+end;
+$$;
