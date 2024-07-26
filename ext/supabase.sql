@@ -158,17 +158,20 @@ returns bigint
 language plpgsql
 as $$
 declare
-  configuration_id bigint;
-  new_row bigint;
+    configuration_id bigint;
+    new_row bigint;
 begin
-  select
-    id into configuration_id
-  from sm_configuration
-  where name = configuration_name;
-  insert into sm_report(instant, message, sm_configuration_id)
-  values (NOW(), message, configuration_id)
-  returning id into new_row;
-  return new_row;
+    IF NOT EXISTS (SELECT 1 FROM sm_configuration WHERE name = configuration_name) THEN
+        RAISE EXCEPTION 'The arcade with the name % does not exist', configuration_name;
+    END IF;
+    select
+        id into configuration_id
+    from sm_configuration
+    where name = configuration_name;
+    insert into sm_report(instant, message, sm_configuration_id)
+    values (NOW(), message, configuration_id)
+    returning id into new_row;
+    return new_row;
 end;
 $$;
 
