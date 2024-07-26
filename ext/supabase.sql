@@ -6,6 +6,16 @@ DROP TABLE IF EXISTS public.sm_report;
 DROP TABLE IF EXISTS public.sm_configuration;
 DROP TABLE IF EXISTS public.sm_arcade_paths;
 DROP TABLE IF EXISTS public.sm_arcade_credentials;
+drop function if exists create_arcade(
+    new_name,
+    new_operative_system,
+    new_stepmania_version,
+    new_pixeldrain_key,
+    new_pixeldrain_secret,
+    new_path_stepmania,
+    new_path_downloads,
+    new_path_config,
+    new_path_program);
 drop function if exists publish_report(configuration_name, message);
 drop function if exists latest_reports(reports_amount);
 --drop function if exists update_pack(configuration_name, pack_name, new_pack_identifier);
