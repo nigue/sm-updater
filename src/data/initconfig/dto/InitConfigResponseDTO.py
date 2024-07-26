@@ -17,7 +17,7 @@ class InitConfigResponseSmPackDTO:
 @dataclass(frozen=True)
 class InitConfigResponseSmArcadePathsDTO:
     id: int
-    sm: str
+    stepmania: str
     config: str
     program: str
     downloads: str

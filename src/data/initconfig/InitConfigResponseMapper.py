@@ -28,7 +28,7 @@ class InitConfigResponseMapper(Mapper[InitConfigResponseDTO, InitConfigResponseM
                 pixeldrain_key=dto.sm_arcade_credentials["pixeldrain_key"],
                 pixeldrain_secret=dto.sm_arcade_credentials["pixeldrain_secret"]),
             paths=InitConfigPathsModel(
-                sm=dto.sm_arcade_paths["sm"],
+                stepmania=dto.sm_arcade_paths["stepmania"],
                 config=dto.sm_arcade_paths["config"],
                 program=dto.sm_arcade_paths["program"],
                 downloads=dto.sm_arcade_paths["downloads"]),
