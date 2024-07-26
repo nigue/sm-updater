@@ -1,3 +1,4 @@
 .env
 .idea
 .venv
+ext/local_data.sql
