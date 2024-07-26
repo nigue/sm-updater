@@ -154,6 +154,69 @@ VALUES(
     1);
 
 -- Store procedures
+create or replace function create_arcade(
+    new_name text,
+    new_operative_system text,
+    new_stepmania_version text,
+    new_pixeldrain_key text,
+    new_pixeldrain_secret text,
+    new_path_stepmania text,
+    new_path_downloads text,
+    new_path_config text,
+    new_path_program text)
+returns VOID
+language plpgsql
+as $$
+declare
+    new_arcade_credentials_id bigint;
+    new_arcade_paths_id bigint;
+begin
+    -- validate params
+    IF EXISTS (SELECT 1 FROM sm_configuration WHERE name = new_name) THEN
+        RAISE EXCEPTION 'The arcade with the name % already exist', new_name;
+    END IF;
+    -- obtain dependencies
+    INSERT INTO public.sm_arcade_credentials(
+        pixeldrain_key,
+        pixeldrain_secret)
+    VALUES(
+        new_pixeldrain_key,
+        new_pixeldrain_secret)
+    RETURNING id INTO new_arcade_credentials_id;
+    IF new_arcade_credentials_id IS NULL THEN
+        RAISE EXCEPTION 'Error creating credentials';
+    END IF;
+    INSERT INTO public.sm_arcade_paths(
+        stepmania,
+        downloads,
+        config,
+        program)
+    VALUES(
+        new_path_stepmania,
+        new_path_downloads,
+        new_path_config,
+        new_path_program)
+    RETURNING id INTO new_arcade_paths_id;
+    IF new_arcade_paths_id IS NULL THEN
+        RAISE EXCEPTION 'Error creating paths';
+    END IF;
+    INSERT INTO public.sm_configuration(
+        name,
+        realize,
+        so,
+        sm,
+        fk_credentials,
+        fk_paths)
+    VALUES(
+        new_name,
+        1,
+        new_operative_system,
+        new_stepmania_version,
+        new_arcade_credentials_id,
+        new_arcade_paths_id);
+end;
+$$;
+
 create or replace function publish_report(configuration_name text, message text)
 returns bigint
 language plpgsql

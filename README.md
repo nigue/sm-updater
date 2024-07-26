@@ -22,6 +22,8 @@ https://pypi.org/project/py7zr/
 
     - use supabase stored procedure postgres
     - use supabase enumrated types to files
+        - type files to zip or not
+        - operative system
     - Generate report log, with success or errors in a supabase table
     - Read stats.xml and upload record using a sp in postgress
         - read xml with phyton
