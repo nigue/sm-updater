@@ -176,12 +176,17 @@ begin
 end;
 $$;
 
-create or replace function latest_reports(reports_amount int)
+create or replace function latest_reports(configuration_name text, reports_amount int)
 RETURNS TABLE(instant_date TIMESTAMP WITH TIME ZONE, message_log text) AS $$
 BEGIN
+    IF NOT EXISTS (SELECT 1 FROM sm_configuration WHERE name = configuration_name) THEN
+        RAISE EXCEPTION 'The arcade with the name % does not exist', configuration_name;
+    END IF;
     RETURN QUERY
-    SELECT instant, message
-    FROM sm_report
+    SELECT r.instant, r.message
+    FROM sm_report r, sm_configuration c
+    where r.sm_configuration_id = c.id
+    and c.name = configuration_name
     ORDER BY instant asc
     LIMIT reports_amount;
 END;
