@@ -20,6 +20,7 @@ https://pypi.org/project/py7zr/
 
 ## To work
 
+    - use supabase phyton library
     - use supabase stored procedure postgres
     - use supabase enumrated types to files
         - type files to zip or not
