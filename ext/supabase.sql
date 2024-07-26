@@ -175,4 +175,15 @@ begin
 end;
 $$;
 
+create or replace function latest_reports(reports_amount int)
+RETURNS TABLE(instant_date TIMESTAMP WITH TIME ZONE, message_log text) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT instant, message
+    FROM sm_report
+    ORDER BY instant asc
+    LIMIT reports_amount;
+END;
+$$ LANGUAGE plpgsql;
+
 --drop function if exists update_pack(configuration_name, pack_name, pack_identifier)
