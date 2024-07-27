@@ -18,6 +18,8 @@ drop function if exists create_arcade(
     new_path_program);
 drop function if exists publish_report(configuration_name, message);
 drop function if exists latest_reports(reports_amount);
+drop function if exists limit_max_reports();
+DROP TRIGGER IF EXISTS limit_reports ON sm_report;
 --drop function if exists update_pack(configuration_name, pack_name, new_pack_identifier);
 
 -- Structure and contraints
@@ -102,66 +104,6 @@ create policy "sm_report select"
 on "public"."sm_report"
 to service_role
 using (true);
-
--- Initial data
-INSERT INTO public.sm_arcade_paths(
-    stepmania,
-    downloads,
-    config,
-    program)
-VALUES(
-    '/opt/NotITG-v4.2.0',
-    '/opt/Downloads',
-    '/opt/Downloads/sm_sync_config.json',
-    '/opt/SmScript');
-
-INSERT INTO public.sm_arcade_credentials(
-    pixeldrain_key,
-    pixeldrain_secret)
-VALUES(
-    '1234',
-    'asdf');
-
-INSERT INTO public.sm_configuration(
-    name,
-    realize,
-    so,
-    sm,
-    fk_credentials,
-    fk_paths)
-VALUES(
-    'arcade_center',
-    1,
-    'linux',
-    'ITGmania',
-    1,
-    1);
-
-INSERT INTO public.sm_pack(
-    identifier,
-    password,
-    destination,
-    internal,
-    file,
-    compress,
-    sm_configuration_id)
-VALUES(
-    'iden',
-    'pass',
-    'Packages',
-    'Songs',
-    'srgsgdftz.zip',
-    true,
-    1);
-
-INSERT INTO public.sm_report(
-    instant,
-    message,
-    sm_configuration_id)
-VALUES(
-    '2024-07-28 16:12:12+00',
-    'text',
-    1);
 
 -- Store procedures
 create or replace function create_arcade(
@@ -265,4 +207,28 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- triggers and triggers functions
+CREATE OR REPLACE FUNCTION limit_max_reports()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (SELECT COUNT(*) FROM sm_report WHERE sm_configuration_id = NEW.sm_configuration_id) >= 90 THEN
+        DELETE FROM sm_report
+        WHERE id = (
+            SELECT id
+            FROM sm_report
+            ORDER BY instant ASC
+            LIMIT 1
+        );
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER limit_reports
+BEFORE INSERT ON sm_report
+FOR EACH ROW
+EXECUTE FUNCTION limit_max_reports();
+
+
+--drop function if exists create_pack(?)
 --drop function if exists update_pack(configuration_name, pack_name, pack_identifier)
