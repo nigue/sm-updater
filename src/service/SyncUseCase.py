@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 
 from src.data.initconfig.InitConfigResource import InitConfigResource
 from src.data.initconfig.dto.InitConfigRequestModel import InitConfigRequestModel
+from src.data.tracelog.TraceLogRepository import TraceLogRepository
+from src.data.tracelog.TraceLogRequestDTO import TraceLogRequestDTO, LogLevel
 from src.service.model.InitConfigResponseModel import InitConfigPackModel, InitConfigPathsModel
 
 
@@ -21,23 +23,24 @@ class SyncUseCase:
         repository = InitConfigResource()
         load_dotenv()  # dotenv_path = Path('path/to/.env')
         model = InitConfigRequestModel(
-            os.getenv("ARCADE_ID_NAME"),
-            os.getenv("SUPABASE_USER_HASH"),
-            os.getenv("SUPABASE_API_KEY")
+            os.getenv("ARCADE_ID_NAME")
         )
-        # TODO try catch finnaly
-        remote_conf = repository.process(model)
-        div = "/"
-        if remote_conf.so.lower().find("win") == 0:
-            div = "\\"
-        local_res = local_resources(remote_conf.paths.config)
-        process_packs_list(remote_conf.packs, local_res, remote_conf.paths, div)
-        print(f'Actualizando configuracion local')
-        os.remove(remote_conf.paths.config)
-        with open(remote_conf.paths.config, 'w', encoding='utf-8') as f:
-            packs_dict = [asdict(pack) for pack in remote_conf.packs]
-            json.dump(packs_dict, f, ensure_ascii=False, indent=4)
-        print(f'End...')
+        trace = TraceLogRepository()
+        try:
+            remote_conf = repository.process(model)
+            div = "/"
+            if remote_conf.so.lower().find("win") == 0:
+                div = "\\"
+            local_res = local_resources(remote_conf.paths.config)
+            process_packs_list(remote_conf.packs, local_res, remote_conf.paths, div)
+            print(f'Actualizando configuracion local')
+            os.remove(remote_conf.paths.config)
+            with open(remote_conf.paths.config, 'w', encoding='utf-8') as f:
+                packs_dict = [asdict(pack) for pack in remote_conf.packs]
+                json.dump(packs_dict, f, ensure_ascii=False, indent=4)
+            trace.fetch(TraceLogRequestDTO(model.arcade, f"Packs procesados {len(remote_conf.packs)}", LogLevel.Info))
+        except Exception as error:
+            trace.fetch(TraceLogRequestDTO(model.arcade, str(error), LogLevel.Error))
 
 
 def json_to_dataclass(dataclass_type, json_data):

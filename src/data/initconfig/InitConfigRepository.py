@@ -1,6 +1,7 @@
 from abc import ABC
+from supabase import create_client, Client
 
-import requests
+import os
 
 from src.data.Repository import Repository
 from src.data.initconfig.dto.InitConfigRequestDTO import InitConfigRequestDTO
@@ -15,20 +16,13 @@ def json_to_dataclass(dataclass_type, json_data):
 class InitConfigRepository(Repository[InitConfigRequestDTO, InitConfigResponseDTO], ABC):
 
     def fetch(self, dto: InitConfigRequestDTO) -> InitConfigResponseDTO:
-        try:
-            response = requests.get(dto.uri, headers=dto.headers)
-            response.raise_for_status()
-            return json_to_dataclass(InitConfigResponseDTO, response.json()[0])
-        except requests.exceptions.HTTPError as errh:
-            print("HTTP Error:", errh)
-            raise RestException(errh)
-        except requests.exceptions.ConnectionError as errc:
-            print("Error de Conexión:", errc)
-            raise RestException(errc)
-        except requests.exceptions.Timeout as errt:
-            print("Timeout Error:", errt)
-            raise RestException(errt)
-        except requests.exceptions.RequestException as err:
-            print("Error:", err)
-            raise RestException(err)
+        url: str = os.environ.get("SUPABASE_URL")
+        key: str = os.environ.get("SUPABASE_KEY")
+        supabase: Client = create_client(url, key)
+        response = (supabase.table("sm_configuration")
+                    .select("*,sm_arcade_credentials(*),sm_arcade_paths(*),sm_pack(*)")
+                    .eq("name", dto.arcade_name)
+                    .limit(1)
+                    .execute())
+        return json_to_dataclass(InitConfigResponseDTO, response.data[0])
 
