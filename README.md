@@ -1,12 +1,5 @@
 # Stepmania linux Updater
 
-### Examples
-
-1. Get md5 from file
-```bat
-certutil -hashfile file.zip md5
-```
-
 https://pypi.org/project/Pixeldrain/1.0.1/
 
 https://pypi.org/project/py7zr/
