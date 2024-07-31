@@ -10,11 +10,3 @@ class InitConfigValidator(Validator[InitConfigRequestModel], ABC):
             e = "El valor arcade no puede estar vacío"
             print(f"Error: {e}")
             raise ValueError(e)
-        if not model.user:
-            e = "El valor user no puede estar vacío"
-            print(f"Error: {e}")
-            raise ValueError(e)
-        if not model.key:
-            e = "El valor key no puede estar vacío"
-            print(f"Error: {e}")
-            raise ValueError(e)
