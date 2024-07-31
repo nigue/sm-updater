@@ -6,7 +6,6 @@ import os
 from src.data.Repository import Repository
 from src.data.initconfig.dto.InitConfigRequestDTO import InitConfigRequestDTO
 from src.data.initconfig.dto.InitConfigResponseDTO import InitConfigResponseDTO
-from src.excepcion.RestException import RestException
 
 
 def json_to_dataclass(dataclass_type, json_data):
