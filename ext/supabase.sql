@@ -10,7 +10,9 @@ DROP TABLE IF EXISTS public.sm_arcade_credentials;
 drop function if exists create_arcade;
 drop function if exists publish_report;
 drop function if exists latest_reports;
-drop function if exists limit_max_reports();
+drop function if exists limit_max_reports;
+drop function if exists create_pack;
+drop function if exists update_pack;
 DROP TRIGGER IF EXISTS limit_reports ON sm_report;
 DROP TYPE if exists log_level;
 --drop function if exists update_pack(configuration_name, pack_name, new_pack_identifier);
@@ -254,7 +256,7 @@ returns VOID
 language plpgsql
 as $$
 declare
-    new_arcade_credentials_id bigint;
+    configuration_id bigint;
 begin
     -- validate params
     IF NOT EXISTS (SELECT 1 FROM sm_configuration WHERE name = configuration_name) THEN
@@ -262,7 +264,7 @@ begin
     END IF;
     -- obtain dependencies
     SELECT id
-    INTO new_arcade_credentials_id
+    INTO configuration_id
     FROM sm_configuration
     WHERE name = configuration_name;
     INSERT INTO public.sm_pack(
@@ -282,8 +284,33 @@ begin
         new_file,
         new_formal_name,
         new_compress,
-        new_arcade_credentials_id);
+        configuration_id);
 end;
 $$;
 
 --drop function if exists update_pack(configuration_name, pack_name, pack_identifier)
+create or replace function update_pack(
+    configuration_name text,
+    pack_identifier text,
+    pack_formal_name text)
+returns VOID
+language plpgsql
+as $$
+declare
+    configuration_id bigint;
+begin
+    -- validate params
+    IF NOT EXISTS (SELECT 1 FROM sm_configuration WHERE name = configuration_name) THEN
+        RAISE EXCEPTION 'The arcade with the name % does not exist', configuration_name;
+    END IF;
+    -- obtain dependencies
+    SELECT id
+    INTO configuration_id
+    FROM sm_configuration
+    WHERE name = configuration_name;
+    UPDATE sm_pack
+    SET identifier = pack_identifier
+    WHERE formal_name = pack_formal_name
+    AND sm_configuration_id = configuration_id;
+end;
+$$;
