@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS public.sm_report;
 DROP TABLE IF EXISTS public.sm_configuration;
 DROP TABLE IF EXISTS public.sm_arcade_paths;
 DROP TABLE IF EXISTS public.sm_arcade_credentials;
---todo funcion create_arcade is not droped
 drop function if exists create_arcade;
 drop function if exists publish_report;
 drop function if exists latest_reports;
@@ -241,6 +240,50 @@ BEFORE INSERT ON sm_report
 FOR EACH ROW
 EXECUTE FUNCTION limit_max_reports();
 
-
 --drop function if exists create_pack(?)
+create or replace function create_pack(
+    configuration_name text,
+    new_identifier text,
+    new_password text,
+    new_destination text,
+    new_internal text,
+    new_file text,
+    new_formal_name text,
+    new_compress boolean)
+returns VOID
+language plpgsql
+as $$
+declare
+    new_arcade_credentials_id bigint;
+begin
+    -- validate params
+    IF NOT EXISTS (SELECT 1 FROM sm_configuration WHERE name = configuration_name) THEN
+        RAISE EXCEPTION 'The arcade with the name % does not exist', configuration_name;
+    END IF;
+    -- obtain dependencies
+    SELECT id
+    INTO new_arcade_credentials_id
+    FROM sm_configuration
+    WHERE name = configuration_name;
+    INSERT INTO public.sm_pack(
+        identifier,
+        password,
+        destination,
+        internal,
+        file,
+        formal_name,
+        compress,
+        sm_configuration_id)
+    VALUES(
+        new_identifier,
+        new_password,
+        new_destination,
+        new_internal,
+        new_file,
+        new_formal_name,
+        new_compress,
+        new_arcade_credentials_id);
+end;
+$$;
+
 --drop function if exists update_pack(configuration_name, pack_name, pack_identifier)
