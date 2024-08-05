@@ -104,7 +104,7 @@ def process_pack(
             password=pack.password) as initial_file:
         initial_file.extractall(path=temporal_dir)
     print(f'Comprime pack')
-    file_to_compress = f'{paths.sm}{div}{pack.destination}{div}{pack.file}'
+    file_to_compress = f'{paths.stepmania}{div}{pack.destination}{div}{pack.file}'
     store_zip_compression(temporal_dir, file_to_compress)
     shutil.rmtree(temporal_dir)
     os.remove(downloaded_file)
