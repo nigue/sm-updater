@@ -215,7 +215,7 @@ BEGIN
     FROM sm_report r, sm_configuration c
     where r.sm_configuration_id = c.id
     and c.name = configuration_name
-    ORDER BY instant asc
+    ORDER BY instant desc
     LIMIT reports_amount;
 END;
 $$ LANGUAGE plpgsql;

@@ -9,6 +9,7 @@ class InitConfigPackModel:
     destination: str
     internal: str
     file: str
+    formal_name: str
     compress: bool
 
 

@@ -104,9 +104,9 @@ def process_pack(
             password=pack.password) as initial_file:
         initial_file.extractall(path=temporal_dir)
     #todo ya no comprime, ahora debe mover
-    print(f'Comprime pack')
-    file_to_compress = f'{paths.stepmania}{div}{pack.destination}{div}{pack.file}'
-    store_zip_compression(temporal_dir, file_to_compress)
+    print(f'Mover pack')
+    dst_to_move = f'{temporal_dir}{div}Songs{div}{pack.formal_name}'
+    shutil.copytree(paths.stepmania_songs_path, dst_to_move)
     shutil.rmtree(temporal_dir)
     os.remove(downloaded_file)
 

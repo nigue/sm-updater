@@ -17,7 +17,8 @@ class InitConfigResponseMapper(Mapper[InitConfigResponseDTO, InitConfigResponseM
                 destination=pack["destination"],
                 internal=pack["internal"],
                 file=pack["file"],
-                compress=pack["compress"]
+                compress=pack["compress"],
+                formal_name=pack["formal_name"]
             ))
         return InitConfigResponseModel(
             name=dto.name,
