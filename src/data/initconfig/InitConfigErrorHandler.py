@@ -41,29 +41,16 @@ class InitConfigErrorHandler(ErrorHandler[InitConfigResponseDTO], ABC):
             e = "El valor so no puede estar vacío"
             print(f"Error: {e}")
             raise HandlerException(e)
-        if not os.path.isdir(dto.sm_arcade_paths["stepmania"]):
-            e = "Debe exsistir un directorio sm"
+        stepmania_songs = dto.sm_arcade_paths["stepmania_songs_path"]
+        if not os.path.isdir(stepmania_songs):
+            e = "Debe exsistir un directorio stepmania Songs"
             print(f"Error: {e}")
-            raise HandlerException(e)
-        div = "/"
-        if dto.so.lower().find("win") == 0:
-            div = "\\"
-        if not os.path.isdir(f'{dto.sm_arcade_paths["stepmania"]}{div}Characters'):
-            e = "Debe exsistir un directorio stepmania Characters"
+        if not os.access(stepmania_songs, os.R_OK):
+            e = "Debe exsistir un directorio stepmania Songs, con persmisos de lectura"
             print(f"Error: {e}")
-            raise HandlerException(e)
-        if not os.path.isdir(f'{dto.sm_arcade_paths["stepmania"]}{div}NoteSkins'):
-            e = "Debe exsistir un directorio stepmania NoteSkins"
+        if not os.access(stepmania_songs, os.W_OK):
+            e = "Debe exsistir un directorio stepmania Songs, con persmisos de escritura"
             print(f"Error: {e}")
-            raise HandlerException(e)
-        if not os.path.isdir(f'{dto.sm_arcade_paths["stepmania"]}{div}Packages'):
-            e = "Debe exsistir un directorio stepmania Packages"
-            print(f"Error: {e}")
-            raise HandlerException(e)
-        if not os.path.isdir(f'{dto.sm_arcade_paths["stepmania"]}{div}Themes'):
-            e = "Debe exsistir un directorio stepmania Themes"
-            print(f"Error: {e}")
-            raise HandlerException(e)
         if not os.path.isfile(dto.sm_arcade_paths["config"]):
             e = "Debe exsistir un archivo config"
             print(f"Error: {e}")

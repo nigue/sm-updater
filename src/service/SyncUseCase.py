@@ -70,9 +70,9 @@ def process_packs_list(
                 print(f'Mismo pack {remote_pack.file}')
                 if not remote_pack.identifier == local_pack.identifier:
                     print(f'Update pack {remote_pack.file}')
-                    file = f"{paths.sm}{div}{local_pack.destination}{div}{local_pack.file}"
-                    os.remove(file)
-                    print(f'Elimina pack local {file}')
+                    pack_dir = f"{paths.stepmania_songs_path}{div}{local_pack.file}"
+                    shutil.rmtree(pack_dir)
+                    print(f'Elimina pack local {pack_dir}')
                 else:
                     procesable = False
             else:
@@ -103,6 +103,7 @@ def process_pack(
             mode='r',
             password=pack.password) as initial_file:
         initial_file.extractall(path=temporal_dir)
+    #todo ya no comprime, ahora debe mover
     print(f'Comprime pack')
     file_to_compress = f'{paths.stepmania}{div}{pack.destination}{div}{pack.file}'
     store_zip_compression(temporal_dir, file_to_compress)

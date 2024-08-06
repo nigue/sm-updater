@@ -14,7 +14,7 @@ class InitConfigPackModel:
 
 @dataclass(frozen=True)
 class InitConfigPathsModel:
-    stepmania: str
+    stepmania_songs_path: str
     config: str
     program: str
     downloads: str
