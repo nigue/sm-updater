@@ -70,7 +70,7 @@ def process_packs_list(
                 print(f'Mismo pack {remote_pack.file}')
                 if not remote_pack.identifier == local_pack.identifier:
                     print(f'Update pack {remote_pack.file}')
-                    pack_dir = f"{paths.stepmania_songs_path}{div}{local_pack.file}"
+                    pack_dir = f"{paths.stepmania_songs_path}{div}{local_pack.formal_name}"
                     shutil.rmtree(pack_dir)
                     print(f'Elimina pack local {pack_dir}')
                 else:
@@ -105,8 +105,9 @@ def process_pack(
         initial_file.extractall(path=temporal_dir)
     #todo ya no comprime, ahora debe mover
     print(f'Mover pack')
-    dst_to_move = f'{temporal_dir}{div}Songs{div}{pack.formal_name}'
-    shutil.copytree(paths.stepmania_songs_path, dst_to_move)
+    dir_to_move = f'{temporal_dir}{div}Songs{div}{pack.formal_name}'
+    dist_to_move = f'{paths.stepmania_songs_path}{div}{pack.formal_name}'
+    shutil.copytree(dir_to_move, dist_to_move)
     shutil.rmtree(temporal_dir)
     os.remove(downloaded_file)
 
