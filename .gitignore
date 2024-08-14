@@ -3,3 +3,4 @@
 .venv
 ext/local_data.sql
 testing
+**/__pycache__

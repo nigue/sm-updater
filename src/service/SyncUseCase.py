@@ -7,8 +7,8 @@ from typing import List
 
 import pixeldrain
 import py7zr
-from dotenv import load_dotenv
 
+from src.conf.Prop import Prop
 from src.data.initconfig.InitConfigResource import InitConfigResource
 from src.data.initconfig.dto.InitConfigRequestModel import InitConfigRequestModel
 from src.data.tracelog.TraceLogRepository import TraceLogRepository
@@ -21,10 +21,7 @@ class SyncUseCase:
     @staticmethod
     def process():
         repository = InitConfigResource()
-        load_dotenv()  # dotenv_path = Path('path/to/.env')
-        model = InitConfigRequestModel(
-            os.getenv("ARCADE_ID_NAME")
-        )
+        model = InitConfigRequestModel(Prop.ARCADE_ID_NAME)
         trace = TraceLogRepository()
         try:
             remote_conf = repository.process(model)

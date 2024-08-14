@@ -9,6 +9,7 @@ from src.excepcion.HandlerException import HandlerException
 class InitConfigErrorHandler(ErrorHandler[InitConfigResponseDTO], ABC):
     def handle(self, dto: InitConfigResponseDTO) -> None:
         for pack in dto.sm_pack:
+            print(str(pack))
             if not pack["identifier"]:
                 e = "El valor identifier no puede estar vacío"
                 print(f"Error: {e}")

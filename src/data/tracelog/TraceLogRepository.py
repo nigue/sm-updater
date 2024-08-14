@@ -3,6 +3,7 @@ from abc import ABC
 
 from supabase import create_client, Client
 
+from src.conf.Prop import Prop
 from src.data.Repository import Repository
 from src.data.tracelog.TraceLogRequestDTO import TraceLogRequestDTO
 
@@ -10,8 +11,8 @@ from src.data.tracelog.TraceLogRequestDTO import TraceLogRequestDTO
 class TraceLogRepository(Repository[TraceLogRequestDTO, None], ABC):
 
     def fetch(self, dto: TraceLogRequestDTO) -> None:
-        url: str = os.environ.get("SUPABASE_URL")
-        key: str = os.environ.get("SUPABASE_KEY")
+        url: str = Prop.SUPABASE_URL
+        key: str = Prop.SUPABASE_KEY
         supabase: Client = create_client(url, key)
         (supabase.rpc("publish_report",
                       {
