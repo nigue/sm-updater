@@ -13,6 +13,7 @@ from src.data.initconfig.InitConfigResource import InitConfigResource
 from src.data.initconfig.dto.InitConfigRequestModel import InitConfigRequestModel
 from src.data.tracelog.TraceLogRepository import TraceLogRepository
 from src.data.tracelog.TraceLogRequestDTO import TraceLogRequestDTO
+from src.data.cleanprogram.CleanProgramRepository import CleanProgramRepository
 from src.service.model.InitConfigResponseModel import InitConfigPackModel, InitConfigPathsModel
 
 
@@ -35,6 +36,16 @@ class SyncUseCase:
             with open(remote_conf.paths.config, 'w', encoding='utf-8') as f:
                 packs_dict = [asdict(pack) for pack in remote_conf.packs]
                 json.dump(packs_dict, f, ensure_ascii=False, indent=4)
+            if remote_conf.script_program:
+                print(f'Update program')
+                info = pixeldrain.info(remote_conf.script_program)
+                pixeldrain.download_file(
+                    remote_conf.script_program,
+                    info['name'],
+                    f'{remote_conf.paths.program}{div}'
+                )
+                cleanProgramRepository = CleanProgramRepository()
+                cleanProgramRepository.fetch(Prop.ARCADE_ID_NAME)
             trace.fetch(TraceLogRequestDTO(model.arcade, f"Packs procesados {len(remote_conf.packs)}", 'Info'))
         except Exception as error:
             trace.fetch(TraceLogRequestDTO(model.arcade, str(error), 'Error'))

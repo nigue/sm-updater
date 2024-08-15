@@ -28,5 +28,5 @@ https://pypi.org/project/py7zr/
         - only update if points are upper
 
 
-zip -p pass123 ccat-command.zip ccat-1.1.0/
-unzip -P your-password zipfile.zip
+zip -rP qwer sm-updater.zip src/* main.py run.sh setup.py update.sh
+unzip -P qwer sm-updater.zip

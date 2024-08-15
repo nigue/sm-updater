@@ -23,6 +23,7 @@ class InitConfigResponseMapper(Mapper[InitConfigResponseDTO, InitConfigResponseM
         return InitConfigResponseModel(
             name=dto.name,
             realize=dto.realize,
+            script_program=dto.script_program,
             so=dto.so,
             sm=dto.sm,
             credentials=InitConfigCredentialsModel(

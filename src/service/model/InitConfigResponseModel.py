@@ -31,6 +31,7 @@ class InitConfigCredentialsModel:
 class InitConfigResponseModel:
     name: str
     realize: int
+    script_program: str
     so: str
     sm: str
     credentials: InitConfigCredentialsModel

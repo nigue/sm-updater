@@ -35,6 +35,7 @@ class InitConfigResponseDTO:
     id: int
     name: str
     realize: int
+    script_program: str
     so: str
     sm: str
     fk_credentials: int
