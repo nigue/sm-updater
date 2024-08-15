@@ -8,3 +8,4 @@ source sm-updater/bin/activate
 pip install -e .
 python main.py
 deactivate
+echo "sm-updater end"

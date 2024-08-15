@@ -26,3 +26,7 @@ https://pypi.org/project/py7zr/
         - read xml with phyton
         - sp validate date and points
         - only update if points are upper
+
+
+zip -p pass123 ccat-command.zip ccat-1.1.0/
+unzip -P your-password zipfile.zip
